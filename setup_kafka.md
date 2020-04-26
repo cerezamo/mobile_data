@@ -18,14 +18,14 @@ Pour voir le status du zookeeper :
 echo stat | nc localhost 2181 | grep Mode
 ```
 
-```
- $KAFKA/bin/zookeeper-shell.sh localhost:2181 ls /brokers/ids
- ```
-
 ## 2. **Démarage du serveur `Kakfa`**
 
 ```
 $KAFKA/bin/kafka-server-start.sh -daemon $KAFKA/config/server.properties
+```
+
+```
+$KAFKA/bin/zookeeper-shell.sh localhost:2181 ls /brokers/ids
 ```
 
 
@@ -64,6 +64,15 @@ On commence par lancer PySpark avec une commande précisant l'import du package 
 ```
 pyspark --packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.5
 ```
+
+Dans un notebook `PySpark`
+```
+import os
+os.environ['PYSPARK_SUBMIT_ARGS'] = '--packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.5 pyspark-shell'
+
+from pyspark.sql import SparkSession
+```
+
 ## **Script Python**
 
 ```
