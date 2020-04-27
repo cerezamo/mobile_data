@@ -1,0 +1,1 @@
+(cat /home/cesar/cours/ensae/donnees_distrib/projet/mobile_data/kafka_minimal_df.csv | split -l 1 --filter="$KAFKA/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic antennes; sleep 0.01" > /dev/null ) &
