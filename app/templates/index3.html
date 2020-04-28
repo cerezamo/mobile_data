@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- LEAFLET -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+      crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+    integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+    crossorigin=""></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
+    <!--<script src="https://cdn.plot.ly/plotly-latest.js" charset="utf-8"></script>-->
+<!-- Create an element where the map will take place -->
+<div id="mapid" style = "width:900px; height:580px;"></div>
+<!--<script src="../static/leaf.js"></script>-->
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+    <!-- END LEAFLET -->
+  </head>
+  <body>
+    <h1>London Bus Live Map</h1>
+
+    <!-- LEAFLET -->
+    <div id="mapid" style = "width:900px; height:580px;"></div>
+    <!-- END LEAFLET -->
+  </body>
+</html>
+
+<script>
+// var map = L
+//   .map('mapid')
+//   .setView([6, 6], 25);   // center position + zoom
+
+// L.tileLayer(
+//     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
+//     maxZoom: 12,
+//     }).addTo(map);
+
+var x_plot = [];
+var y_plot = [];
+
+var trace = {
+  x: [],
+  y: [],
+  mode: 'markers',
+  type: 'scatter',
+  marker: { size: 10 }
+};
+var data = [trace]
+
+var layout = {
+  xaxis: {
+    range: [599, 603]
+  },
+  yaxis: {
+    range: [648, 654]
+  },
+  title:'Mobile data'
+};
+
+Plotly.newPlot('mapid', data, layout);
+
+var interval = setInterval(function() {
+
+  var update = {
+    x: [x_plot],
+    y: [y_plot],
+  }
+
+  Plotly.update('mapid', update)
+
+}, 100);
+
+
+var source = new EventSource("/topic/antennos");
+source.addEventListener("message", function(e) { console.log("message");
+                                                  obj = JSON.parse(e.data);
+                                                  console.log(obj);
+                                                  //  for (var i = 0; i < mapMarkers1.length; i++) {
+                                                  //    map.removeLayer(mapMarkers1[i]);
+                                                  //    } 
+                                                  //marker1 = L.marker([obj.x, obj.y]).addTo(map);
+                                                 // mapMarkers1.push(marker1);
+                                                    //x_plot= []
+                                                    //y_plot = []
+                                                    x_data = obj.x;
+                                                    y_data = obj.y;
+                                                    x_plot.push(x_data);
+                                                    y_plot.push(y_data);
+                                                    //Plotly.update('mapid', data, layout);
+
+                                                    
+  }, false);
+</script>
