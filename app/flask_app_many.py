@@ -15,7 +15,7 @@ app = Flask(__name__)
 #@cache.cached(timeout=50)
 def index():
     """Serve the index HTML"""
-    return(render_template('index_many.html'))
+    return(render_template('index_many_simple.html'))
 
  #Consumer API
 
@@ -39,5 +39,5 @@ def get_messages():
 #     return Response(events(), mimetype="text/event-stream")
 
 if __name__ == '__main__':
-    app.run(port=2003,use_reloader=True) # 
+    app.run(port=2005,use_reloader=True) # 
     #socketio.run(app)

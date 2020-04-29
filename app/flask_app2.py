@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     """Serve the index HTML"""
-    return(render_template('index3.html'))
+    return(render_template('index2.html'))
 
  #Consumer API
 
@@ -33,5 +33,6 @@ def get_messages():
 #     return Response(events(), mimetype="text/event-stream")
 
 if __name__ == '__main__':
-    app.run(port=2003,use_reloader=True) # 
+    app.run(port=1995,use_reloader=True) # 
+
     #socketio.run(app)
