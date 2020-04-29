@@ -120,6 +120,37 @@ query2 = sdfAntennes.writeStream.format("console").start()
 Résinstaller kafka et modifier $KAFKA/config/server.configuration en décommentant la ligne `listeners=PLAINTEXT://:9092`
 
 
+## **Flask linkage**
+requirements.txt (A faire) 
+flask 
+pykafka
+pandas
+json 
+
+Start zookeeper and kafka
+
+Create a topic called "antennas"  => Faire une fonction qui met direct le topic 
+
+Go to : ~/projet_stream/simulator/mobile_data/app
+
+```console
+python flask_app_many.py
+```
+=> Running on http://127.0.0.1:port/ 
+
+When you are on the webpage, launch the stream :
+
+```console
+python flask_app_many.py
+```
+
+
+
+
+
+
+
+
 
 
 
