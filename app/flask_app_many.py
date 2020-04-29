@@ -39,5 +39,5 @@ def get_messages():
 #     return Response(events(), mimetype="text/event-stream")
 
 if __name__ == '__main__':
-    app.run(port=2005,use_reloader=True) # 
+    app.run(port=2006,use_reloader=True) # 
     #socketio.run(app)
