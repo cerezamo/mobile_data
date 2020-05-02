@@ -21,7 +21,7 @@ receiveAntennes = spark \
   .readStream \
   .format("kafka") \
   .option("kafka.bootstrap.servers", "localhost:9092") \
-  .option("subscribe", "antennes") \
+  .option("subscribe", "antennesInput") \
   .option("startingOffsets", "latest") \
   .load() \
   .selectExpr("CAST(value AS STRING)")
@@ -59,19 +59,19 @@ query1 = sdf \
          .writeStream \
          .format("console") \
          .outputMode("update") \
-         .trigger(processingTime='30 seconds') \
+         .trigger(processingTime='20 seconds') \
          .option("checkpointLocation", "/home/cerezamo/kafka/kafka/checkpoint") \
          .start()
 
 
 query2 = sdf \
-         .selectExpr("CAST(key AS STRING) AS key", "to_json(struct(*)) AS value") \
+         .selectExpr("CAST(PhoneId AS STRING) AS key", "to_json(struct(*)) AS value") \
          .writeStream \
          .format("kafka") \
          .outputMode("update") \
          .option("checkpointLocation", "/home/cerezamo/kafka/kafka/checkpoint") \
          .option("kafka.bootstrap.servers", "localhost:9092") \
-         .option("topic", "antennos") \
+         .option("topic", "antennesOutput") \
          .start()
 
 # .trigger(processingTime='2 seconds')

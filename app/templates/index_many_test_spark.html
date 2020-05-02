@@ -100,7 +100,7 @@ var interval = setInterval(function() {
 
 }, 1000);
 
-var source = new EventSource("/topic/antennos");
+var source = new EventSource("/topic/antennesOutput");
 source.addEventListener("message", function(e) {// console.log("message");
                                                   console.log(e)
                                                   obj = JSON.parse(e.data);
@@ -111,6 +111,7 @@ source.addEventListener("message", function(e) {// console.log("message");
                                                   //marker1 = L.marker([obj.x, obj.y]).addTo(map);
                                                  // mapMarkers1.push(marker1);
                                                    console.log(obj)
+                                                   
                                                     x_plot = []
                                                     y_plot = []
                                                     text_plot = []
@@ -118,6 +119,7 @@ source.addEventListener("message", function(e) {// console.log("message");
                                                       x_data = obj[i].x;
                                                       y_data = obj[i].y;
                                                       text_data = obj[i].PhoneId
+
                                                       x_plot.push(x_data);
                                                       y_plot.push(y_data);
                                                       text_plot.push(text_data);

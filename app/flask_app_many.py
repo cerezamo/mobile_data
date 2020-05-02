@@ -19,11 +19,11 @@ def index():
 
  #Consumer API
 
-@app.route('/topic/antennos')
+@app.route('/topic/antennesOutput')
 def get_messages():
     client = get_kafka_client()
     def events():
-        for i in client.topics['antennos'].get_simple_consumer():
+        for i in client.topics['antennesOutput'].get_simple_consumer():
             yield 'data:{0}\n\n'.format(i.value.decode())
     return Response(events(), mimetype="text/event-stream")
 
@@ -39,5 +39,5 @@ def get_messages():
 #     return Response(events(), mimetype="text/event-stream")
 
 if __name__ == '__main__':
-    app.run(port=2006,use_reloader=True) # 
+    app.run(port=2000,use_reloader=True) # 
     #socketio.run(app)
