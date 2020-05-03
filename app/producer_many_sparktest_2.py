@@ -14,6 +14,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import unix_timestamp, col
 from pyspark.sql import Window
 from pyspark.sql.functions import *
+PATH_KAFKA = os.environ["KAFKA"]
 spark = SparkSession.builder \
   .appName("Spark Structured Streaming from Kafka") \
   .getOrCreate()
@@ -54,19 +55,65 @@ sdf = sdf.select(col("PhoneId").alias("PhoneId"),col("avg(x)").alias("x"),col("a
 #sdf = sdf.withColumn("key", lit(0))
 # sdf = sdf.groupBy('key').agg(collect_list("PhoneId").alias("PhoneId"), collect_list("x").alias("x"),collect_list("y").alias("y"))
 
+query1 = sdf.withColumn("key", lit(0)) \
+         .selectExpr("CAST(key AS STRING) AS key", "to_json(struct(*)) AS value") \
+         .writeStream \
+         .format("console") \
+         .outputMode("complete") \
+         .trigger(processingTime='20 seconds') \
+         .option("checkpointLocation", "/home/cerezamo/kafka/kafka/checkpoint") \
+         .start()
 
-def send_df_to_dashboard(df):
-  import requests
-  import json
-  x = [str(t.x) for t in df.select("x").collect()]
-  y = [p.y for p in df.select("y").collect()]
-  PhoneId = [p.PhoneId for p in df.select("PhoneId").collect()]
-  url = 'http://localhost:5001/updateData'
-  request_data = {'PhoneId': str(PhoneId), 'x': str(x), 'y': str(y)}
-  response = requests.post(url, data=request_data)
-
-send_df_to_dashboard(sdf)
+query1 = sdf \
+         .selectExpr("CAST(PhoneId AS STRING) AS key", "to_json(struct(*)) AS value") \
+         .writeStream \
+         .format("console") \
+         .outputMode("complete") \
+         .trigger(processingTime='20 seconds') \
+         .option("checkpointLocation", os.path.join(PATH_KAFKA, "checkpoint")) \
+         .start()
 
 
+query2 = sdf \
+         .selectExpr("CAST(PhoneId AS STRING) AS key", "to_json(struct(*)) AS value") \
+         .write \
+         .format("kafka") \
+         .outputMode("update") \
+<<<<<<< HEAD
+         .trigger(processingTime='20 seconds') \
+         .option("checkpointLocation", "/home/cerezamo/kafka/kafka/checkpoint") \
+=======
+         .option("checkpointLocation", os.path.join(PATH_KAFKA, "checkpoint")) \
+>>>>>>> 35cd79e7790b8e986ad49f31184b79f2a358bdac
+         .option("kafka.bootstrap.servers", "localhost:9092") \
+         .option("topic", "antennesOutput") \
+         .start()
 
-sdf.writeStream.format('console').start()
+
+query2 = sdf \
+         .selectExpr("CAST(PhoneId AS STRING) AS key", "to_json(struct(*)) AS value") \
+         .writeStream \
+         .format("kafka") \
+         .outputMode("update") \
+         .trigger(processingTime='20 seconds') \
+         .option("checkpointLocation", "$KAFKA/checkpoint") \
+         .option("kafka.bootstrap.servers", "localhost:9092") \
+         .option("topic", "antennesOutput") \
+         .start()
+
+query2 = sdf \
+         .map(_.toString.getBytes).toDF("x") \
+         .writeStream \
+         .format("kafka") \
+         .outputMode("complete") \
+         .trigger(processingTime='20 seconds') \
+         .option("checkpointLocation", "$KAFKA/checkpoint") \
+         .option("kafka.bootstrap.servers", "localhost:9092") \
+         .option("topic", "antennesOutput") \
+         .start()
+
+
+# .trigger(processingTime='2 seconds')
+#  query1 = sdf_loc.withColumnRenamed(['avg(x)', 'x'], ['avg(y)', 'y']) \
+#          .selectExpr("CAST(t AS STRING) AS key", "to_json(struct(*)) AS value")
+#          .writeStream.format("console").outputMode("update").start()
