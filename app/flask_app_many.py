@@ -24,6 +24,7 @@ def get_messages():
     client = get_kafka_client()
     def events():
         for i in client.topics['antennesOutput'].get_simple_consumer():
+            
             yield 'data:{0}\n\n'.format(i.value.decode())
     return Response(events(), mimetype="text/event-stream")
 

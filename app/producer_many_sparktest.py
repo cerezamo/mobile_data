@@ -37,8 +37,6 @@ main_df = main_df.select([c for c in main_df.columns if c in ['t','PhoneId','x',
 main_df = main_df.orderBy('t', ascending=True)
 main_df = main_df.withColumn('x', main_df.x/1000).withColumn('y', main_df.y/1000)
 
-
-
 query = main_df \
   .selectExpr("CAST(t AS STRING) AS key", "to_json(struct(*)) AS value") \
   .write  \
