@@ -14,6 +14,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import unix_timestamp, col
 from pyspark.sql import Window
 from pyspark.sql.functions import *
+PATH_KAFKA = os.environ["KAFKA"]
 spark = SparkSession.builder \
   .appName("Spark Structured Streaming from Kafka") \
   .getOrCreate()
@@ -60,16 +61,16 @@ query1 = sdf \
          .format("console") \
          .outputMode("update") \
          .trigger(processingTime='20 seconds') \
-         .option("checkpointLocation", "/home/cerezamo/kafka/kafka/checkpoint") \
+         .option("checkpointLocation", os.path.join(PATH_KAFKA, "checkpoint")) \
          .start()
 
 
 query2 = sdf \
          .selectExpr("CAST(PhoneId AS STRING) AS key", "to_json(struct(*)) AS value") \
-         .writeStream \
+         .write \
          .format("kafka") \
          .outputMode("update") \
-         .option("checkpointLocation", "/home/cerezamo/kafka/kafka/checkpoint") \
+         .option("checkpointLocation", os.path.join(PATH_KAFKA, "checkpoint")) \
          .option("kafka.bootstrap.servers", "localhost:9092") \
          .option("topic", "antennesOutput") \
          .start()

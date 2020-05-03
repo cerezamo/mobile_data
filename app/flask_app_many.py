@@ -23,8 +23,15 @@ def index():
 def get_messages():
     client = get_kafka_client()
     def events():
+        liste = []
+        j = 0
         for i in client.topics['antennesOutput'].get_simple_consumer():
-            yield 'data:{0}\n\n'.format(i.value.decode())
+            liste.append(i.value.decode())
+            j ++
+        string = ''
+        for i in range(j):
+            string += 'data:{0}\n\n'.format(liste[i])
+        yield string
     return Response(events(), mimetype="text/event-stream")
 
 # @app.route('/topic/antennos')
