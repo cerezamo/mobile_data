@@ -56,7 +56,7 @@ Activation du stream :
 
 Affichage du stream dans la sortie de la console :
 ```console
-$KAFKA/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic antennes --from-beginning
+$KAFKA/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic antennesOutput --from-beginning
 ```
 
 ## 5. **Connexion de PySpark au Stream**
@@ -144,16 +144,22 @@ When you are on the webpage, launch the stream :
 python flask_app_many.py
 ```
 
+## **Utilitaire**
 
+Afficher l'id du serveur kafka :
+```console
+$KAFKA/bin/zookeeper-shell.sh localhost:2181 ls /brokers/ids
+```
 
+Afficher la liste des topics kafka :
+```console
+$KAFKA/bin/zookeeper-shell.sh localhost:2181 ls /brokers/topics
+```
 
-
-
-
-
-
-
-
+Supprimer un topic
+```console
+$KAFKA/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic antennesOutput
+```
 
 
 
