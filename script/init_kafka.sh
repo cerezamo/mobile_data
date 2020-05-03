@@ -1,12 +1,14 @@
-echo "Suppression des anciens dossiers /tmp/zookeeper/ et /tmp/kafka-logs/ ..."
+echo "Suppression des anciens dossiers :\n- /tmp/zookeeper/\n- /tmp/kafka-logs/\n- $KAFKA/checkpoint ..."
 sudo rm -rf /tmp/zookeeper/
 sudo rm -rf /tmp/kafka-logs/
+sudo rm -rf $KAFKA/checkpoint	
 echo "Suppression effectuée."
 
 echo "Démarrage du zookeeper sur le port 2181..."
 $KAFKA/bin/zookeeper-server-start.sh -daemon $KAFKA/config/zookeeper.properties
 echo "Démarrage du zookeeper réussi."
 echo "Mode de démarage du zookeeper :"
+sleep 1
 echo stat | nc localhost 2181 | grep Mode
 
 echo "Démarrage du serveur Kafka sur le port 2181..."

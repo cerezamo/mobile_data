@@ -56,7 +56,7 @@ Activation du stream :
 
 Affichage du stream dans la sortie de la console :
 ```console
-$KAFKA/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic antennes --from-beginning
+$KAFKA/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic antennesOutput --from-beginning
 ```
 
 ## 5. **Connexion de PySpark au Stream**
