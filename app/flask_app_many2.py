@@ -53,17 +53,20 @@ def index():
 #         yield 'res:{0}\n\n'.format(res)
 #     return Response(events(), mimetype='application/json') # mimetype="text/event-stream"
 
+
 @app.route('/topic/antennesOutput')
 def get_messages():
     client = get_kafka_client()
     def events():
-        #res = {"messages" : []}
+        import time
+        res = {}
         for message in client.topics['antennesOutput'].get_simple_consumer():
-            res = message.value.decode()
-            yield 'data:{0}\n\n'.format(res)
-            #res["messages"].append(message.value.decode())
-        #res = flask.jsonify(res)
-    return Response(events(), mimetype="text/event-stream") # mimetype="text/event-stream"'application/json' text/event-stream
+            import json
+            key = str(json.loads(message.value.decode())["PhoneId"])
+            res[key] = json.loads(message.value.decode())
+            output=json.dumps(res)
+            yield 'data:{0}\n\n'.format(output)
+    return Response(events(), mimetype="text/event-stream") 
 
 # @app.route('/topic/antennos')
 # def get_messages():

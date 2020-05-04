@@ -96,34 +96,42 @@ var interval = setInterval(function() {
   }
 
   Plotly.newPlot('mapid', [update,trace_antennes],layout)
+  console.log(update)
   //console.log(update)
 
 }, 1000);
 
 var source = new EventSource("/topic/antennesOutput");
 source.addEventListener("message", function(e) {// console.log("message");
-                                                  console.log(e)
-                                                  obj = JSON.parse(e.data);
+                                                  //console.log(e)
+                                                  obj = JSON.parse(e.data); 
                                                   //console.log(obj);
                                                   //  for (var i = 0; i < mapMarkers1.length; i++) {
                                                   //    map.removeLayer(mapMarkers1[i]);
                                                   //    } 
                                                   //marker1 = L.marker([obj.x, obj.y]).addTo(map);
                                                  // mapMarkers1.push(marker1);
-                                                   console.log(obj)
-                                                   
+                                                 //console.log(Object.keys(obj))
                                                     x_plot = []
                                                     y_plot = []
                                                     text_plot = []
-                                                    for (var i=0; i < obj.length; i++){
-                                                      x_data = obj[i].x;
-                                                      y_data = obj[i].y;
-                                                      text_data = obj[i].PhoneId
-
+                                                    //console.log(x_plot)
+                                                    for (const [key, value] of Object.entries(obj)){
+                                                      x_data = value['x'];
+                                                      y_data = value['y'];
+                                                      text_data = value['PhoneId']
                                                       x_plot.push(x_data);
                                                       y_plot.push(y_data);
                                                       text_plot.push(text_data);
                                                     }
+                                                    // for (var i=0; i < obj.length; i++){
+                                                    //   x_data = obj[i].x;
+                                                    //   y_data = obj[i].y;
+                                                    //   text_data = obj[i].PhoneId
+                                                    //   x_plot.push(x_data);
+                                                    //   y_plot.push(y_data);
+                                                    //   text_plot.push(text_data);
+                                                    // }
                                                     
                                                     // x_data = obj.x;
                                                     // console.log(obj[0])
