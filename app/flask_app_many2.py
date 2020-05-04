@@ -38,7 +38,7 @@ app = Flask(__name__)
 #@cache.cached(timeout=50)
 def index():
     """Serve the index HTML"""
-    return(render_template('index_many_test_spark.html'))
+    return(render_template('index_many_simple.html'))
 
  #Consumer API
 

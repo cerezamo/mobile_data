@@ -95,8 +95,8 @@ query2 = sdf \
          .writeStream \
          .format("kafka") \
          .outputMode("update") \
-         .trigger(processingTime='20 seconds') \
-         .option("checkpointLocation", "$KAFKA/checkpoint") \
+         .trigger(processingTime='5 seconds') \
+         .option("checkpointLocation", "/home/cerezamo/kafka/kafka/checkpoint") \
          .option("kafka.bootstrap.servers", "localhost:9092") \
          .option("topic", "antennesOutput") \
          .start()
