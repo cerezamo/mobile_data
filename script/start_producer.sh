@@ -3,6 +3,8 @@ echo "Mise en place du produceur du topic antennesInput ..."
 sleep 10
 echo "OK\n\n"
 
+#La faut mettre une adresse générale + en amont il faut créer la variable $KAFKA 
+
 echo "Lancement du traitement PySpark et mise en place du produceur du topic antennesOutput ..."
 python ../app/producer_many_sparktest_2.py &
 sleep 10

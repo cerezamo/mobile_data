@@ -11,18 +11,12 @@ client = KafkaClient(hosts="localhost:9092")
 topic=client.topics['antennos']
 producer = topic.get_sync_producer()
 
-input_file = input_file[['t','PhoneId','x','y']]
-
-input_file.PhoneId = input_file.PhoneId.astype(str)
-input_file.x = input_file.x/1000
-input_file.y = input_file.y/1000
-
 def generate_checkpoint(input_file):
     for i in range(0,input_file.t.max()):
         input_file_topush = input_file[input_file.t==i]
         message = input_file_topush.to_json(orient='records')
         print(message)
         producer.produce(message.encode('ascii'))
-        time.sleep(1)
+        time.sleep(5)
         
 generate_checkpoint(input_file)
