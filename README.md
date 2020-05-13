@@ -14,6 +14,8 @@ Ce projet a pour but de répliquer un pipeline de données mobiles en temps rée
 ## Getting Started - Prérequis
 
 ### Simulateur
+
+#### Installation
 Si vous voulez être en mesure de faire vous mêmes vos propres simulations, suivez ce premier chapitre. Sinon, il vous suffit de cloner notre repo et d'utiliser les fichiers que nous avons simulé, dans ce cas passez au chapitre suivant. 
 
 Avant toute chose, il faudra s'assurer d'installer la bibliothèque GEOS C++, elle peut être télécharger à l'adresse suivante :  https://trac.osgeo.org/geos (ATTENTION seule la version 3.7.1 est compatible !! )
@@ -43,13 +45,23 @@ GEOS_HOME = /home/user/geos-3.7.1
 
 Le simulateur est installé ! 
 
-** Ces instructions sont valables pour Linux, si vous voulez avoir plus d'informations sur les installations avec Windows veuillez vous référer aux instructions de https://github.com/bogdanoancea/simulator  **
+**Ces instructions sont valables pour Linux, si vous voulez avoir plus d'informations sur l'installation du simulateur sur Windows veuillez vous référer aux instructions de https://github.com/bogdanoancea/simulator**
+
+#### Simuler des données avec le micro-simulateur 
+
+Avant de simuler les données allez regarder les inputs possibles (nombre d'antennes, d'individus, map,...etc), les fichiers inputs se trouvent dans data/ (Notre simulation utilise la dataset2 ou simulation Madrid). Lorsque vous avez choisis l'ensemble de vos paramètres et avez modifié en conséquences les fichiers inputs ouvrez votre terminal et tapez le code suivant (Bien entendu si vous choisissez la dataset 1, ce code est sujet à modifications) : 
+
+```
+$Release/simulator -m ./data/dataset2/mapMadrid.wkt -s ./data/dataset2/simulation.xml -a ./data/dataset1/antennasMadrid.xml -p ./data/dataset2/persons.xml -pb ./data/dataset1/probabilities.xml -v -o
+```
+
+Les fichiers ont été simulé !
 
 ### Spark ? 
 
 ### Kafka
 
-Le code ci dessous permettra d'installer Kafka : 
+Le code ci dessous permettra d'installer Kafka, dans le fichier que vous souhaitez : 
 
 ```
 
