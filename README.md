@@ -14,7 +14,7 @@ Ce projet a pour but de répliquer un pipeline de données mobiles en temps rée
 ## Getting Started - Prérequis
 
 ### Simulateur
-Si voulez être en mesure de faire vous mêmes vos propres simulations, suivez ce premier chapitre. Sinon, il vous suffit de cloner notre repo et d'utiliser les fichiers que nous avons simulé, dans ce cas passez au chapitre suivant. 
+Si vous voulez être en mesure de faire vous mêmes vos propres simulations, suivez ce premier chapitre. Sinon, il vous suffit de cloner notre repo et d'utiliser les fichiers que nous avons simulé, dans ce cas passez au chapitre suivant. 
 
 Avant toute chose, il faudra s'assurer d'installer la bibliothèque GEOS C++, elle peut être télécharger à l'adresse suivante :  https://trac.osgeo.org/geos (ATTENTION seule la version 3.7.1 est compatible !! )
 
@@ -42,6 +42,8 @@ GEOS_HOME = /home/user/geos-3.7.1
 
 
 Le simulateur est installé ! 
+
+** Ces instructions sont valables pour Linux, si vous voulez avoir plus d'informations sur les installations avec Windows veuillez vous référer aux instructions de https://github.com/bogdanoancea/simulator  **
 
 ### Spark ? 
 
