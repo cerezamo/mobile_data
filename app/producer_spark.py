@@ -3,8 +3,8 @@ os.environ['PYSPARK_SUBMIT_ARGS'] = '--packages org.apache.spark:spark-sql-kafka
 import pyspark
 import os
 import re
-from kafka import SimpleProducer, KafkaClient
-from kafka import KafkaProducer
+# from pykafka import SimpleProducer, KafkaClient
+# from pykafka import KafkaProducer
 from pyspark.streaming import StreamingContext
 from pyspark.sql import Column, DataFrame, Row, SparkSession
 from pyspark.streaming.kafka import KafkaUtils
@@ -15,9 +15,12 @@ from pyspark.sql.functions import unix_timestamp, col
 from pyspark.sql import Window
 from pyspark.sql.functions import *
 PATH_KAFKA = os.environ["KAFKA"]
+
+
 spark = SparkSession.builder \
   .appName("Spark Structured Streaming from Kafka") \
   .getOrCreate()
+
 receiveAntennes = spark \
   .readStream \
   .format("kafka") \
@@ -25,7 +28,10 @@ receiveAntennes = spark \
   .option("subscribe", "antennesInput") \
   .option("startingOffsets", "latest") \
   .load() \
-  .selectExpr("CAST(value AS STRING)")
+  .selectExpr("CAST(value AS STRING)") \
+
+
+
 from pyspark.sql.types import *
 schema_ant = StructType([StructField("t", IntegerType()),
                      StructField("AntennaId", IntegerType()),
@@ -34,7 +40,9 @@ schema_ant = StructType([StructField("t", IntegerType()),
                      StructField("x", FloatType()),
                      StructField("y", FloatType()),
                      StructField("TileId", IntegerType()),
-                     StructField("timestamp", StringType()),])
+                     StructField("timestamp", DateType()),])
+# StructField("timestamp", DateType()),])
+
 def parse_data_from_kafka_message(sdf, schema):
     from pyspark.sql.functions import split
     assert sdf.isStreaming == True, "DataFrame doesn't receive streaming data"
@@ -42,7 +50,9 @@ def parse_data_from_kafka_message(sdf, schema):
     for idx, field in enumerate(schema):
         sdf = sdf.withColumn(field.name, col.getItem(idx).cast(field.dataType))
     return sdf.select([field.name for field in schema])
+
 sdfAntennes = parse_data_from_kafka_message(receiveAntennes, schema_ant)
+
 sdfAntennes = sdfAntennes.withColumn('timestamp',unix_timestamp(sdfAntennes.timestamp, 'MM-dd-yyyy HH:mm:ss').cast(TimestampType()).alias("timestamp"))
 sdfAntennes = sdfAntennes.where("EventCode!=1")
 sdfAntennes = sdfAntennes.withColumn('x', sdfAntennes.x/1000).withColumn('y', sdfAntennes.y/1000)
@@ -55,17 +65,17 @@ sdf = sdf.select(col("PhoneId").alias("PhoneId"),col("avg(x)").alias("x"),col("a
 #sdf = sdf.withColumn("key", lit(0))
 # sdf = sdf.groupBy('key').agg(collect_list("PhoneId").alias("PhoneId"), collect_list("x").alias("x"),collect_list("y").alias("y"))
 
-query2 = sdf \
-         .selectExpr("CAST(PhoneId AS STRING) AS key", "to_json(struct(*)) AS value") \
-         .writeStream \
-         .format("kafka") \
-         .outputMode("update") \
-         .trigger(processingTime='5 seconds') \
-         .option("checkpointLocation", "/home/cerezamo/kafka/kafka/checkpoint") \
-         .option("kafka.bootstrap.servers", "localhost:9092") \
-         .option("topic", "antennesOutput") \
-         .start()
-
+query2 = sdf\
+          .selectExpr("CAST(PhoneId AS STRING) AS key", "to_json(struct(*)) AS value")\
+          .writeStream\
+          .format("kafka")\
+          .outputMode("update")\
+          .trigger(processingTime='5 seconds')\
+          .option("checkpointLocation", os.path.join(PATH_KAFKA, "checkpoint"))\
+          .option("kafka.bootstrap.servers", "localhost:9092")\
+          .option("topic", "antennesOutput")\
+          .start() \
+          .awaitTermination()
 
 
 # query1 = sdf.withColumn("key", lit(0)) \
@@ -73,7 +83,6 @@ query2 = sdf \
 #          .writeStream \
 #          .format("console") \
 #          .outputMode("complete") \
-#          .option("truncate", "false") \
 #          .trigger(processingTime='20 seconds') \
 #          .option("checkpointLocation", "/home/cerezamo/kafka/kafka/checkpoint") \
 #          .start()
@@ -82,9 +91,10 @@ query2 = sdf \
 #          .selectExpr("CAST(PhoneId AS STRING) AS key", "to_json(struct(*)) AS value") \
 #          .writeStream \
 #          .format("console") \
-#          .outputMode("complete") \
-#          .trigger(processingTime='10 seconds') \
+#          .outputMode("update") \
+#          .trigger(processingTime='20 seconds') \
 #          .option("checkpointLocation", os.path.join(PATH_KAFKA, "checkpoint")) \
+#          .option("truncate", "false") \
 #          .start()
 
 

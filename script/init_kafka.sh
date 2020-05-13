@@ -30,3 +30,5 @@ echo "Liste des topics Kafka créés :"
 $KAFKA/bin/zookeeper-shell.sh localhost:2181 ls /brokers/topics
 
 echo "L'environnement a été mis en place avec succès !"
+
+python

@@ -1,5 +1,5 @@
 echo "Mise en place du produceur du topic antennesInput ..."
-(cat /home/cesar/cours/ensae/donnees_distrib/projet/mobile_data/kafka_minimal_df.csv | split -l 30 --filter="$KAFKA/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic antennesInput; sleep 10" > /dev/null ) &
+(cat /home/cesar/cours/ensae/donnees_distrib/projet/mobile_data/kafka_ingestion.csv | split -l 30 --filter="$KAFKA/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic antennesInput; sleep 10" > /dev/null ) &
 sleep 10
 echo "OK\n\n"
 
