@@ -12,10 +12,11 @@ Le projet a pour but de répliquer un pipeline de données mobiles en temps rée
 
 ![image](https://github.com/cerezamo/mobile_data/blob/master/images/architecture.PNG)
 
+Imaginons que nous recevons des données en provenance des différentes antennes d'une ville. Elles nous renseignent chacune sur la position des tléphones mobiles
 
 ## Getting Started - Prérequis
 
-Nous supposons que Python, Spark ainsi qu'un environnement Pyspark sont installés sur votre ordinateur. Si ce n'est pas le cas veuillez vous référer aux instruction (cf github antoine)
+Nous supposons que Python, Spark ainsi qu'un environnement Pyspark sont installés sur votre ordinateur. Si ce n'est pas le cas veuillez vous référer aux instruction qui figurent sur ce GitLab :  https://gitlab.com/AntoineLy/ensae_distributedcomputing/-/tree/master/TDs/Installation
 
 Si vous voulez être en mesure de faire vous mêmes vos propres simulations, suivez ce premier chapitre. Sinon, il vous suffit de cloner notre repo et d'utiliser les fichiers que nous avons simulé, dans ce cas passez au chapitre suivant : **Déploiement Kafka**.
 
