@@ -13,6 +13,8 @@ Ce projet a pour but de répliquer un pipeline de données mobiles en temps rée
 
 ## Getting Started - Prérequis
 
+Nous supposons que Python, Spark ainsi qu'un environnement Pyspark sont installés sur votre ordinateur. Si ce n'est pas le cas veuillez vous référer aux instruction (cf github antoine)
+
 ### Simulateur
 
 #### Installation
@@ -49,7 +51,7 @@ Le simulateur est installé !
 
 #### Simuler des données avec le micro-simulateur 
 
-Avant de simuler les données allez regarder les inputs possibles (nombre d'antennes, d'individus, map,...etc), les fichiers inputs se trouvent dans data/ (Notre simulation utilise la dataset2 ou simulation Madrid). Lorsque vous avez choisis l'ensemble de vos paramètres et avez modifié en conséquences les fichiers inputs ouvrez votre terminal et tapez le code suivant (Bien entendu si vous choisissez la dataset 1, ce code est sujet à modifications) : 
+Avant de simuler les données allez regarder les inputs possibles (nombre d'antennes, d'individus, map,...etc), les fichiers inputs se trouvent dans data/ (Notre simulation utilise la dataset2 ou simulation Madrid). Lorsque vous avez choisis l'ensemble de vos paramètres et avez modifié en conséquences les fichiers inputs ouvrez votre terminal, allez dans le fichier 'simulateur' et tapez le code suivant (Bien entendu si vous choisissez la dataset 1, ce code est sujet à modifications) : 
 
 ```
 $Release/simulator -m ./data/dataset2/mapMadrid.wkt -s ./data/dataset2/simulation.xml -a ./data/dataset1/antennasMadrid.xml -p ./data/dataset2/persons.xml -pb ./data/dataset1/probabilities.xml -v -o
@@ -57,7 +59,20 @@ $Release/simulator -m ./data/dataset2/mapMadrid.wkt -s ./data/dataset2/simulatio
 
 Les fichiers ont été simulé !
 
-### Spark ? 
+
+#### Préparation des données 
+
+Certains retraitements ont été effectué afin de simuler des envois des antennes vers Kafka et afficher des cartes sur l'application Flask. Les 
+
+
+
+
+
+
+
+
+
+La suite des instructions est à présent obligatoire pour être en mesure de faire tourner le code. 
 
 ### Kafka
 
