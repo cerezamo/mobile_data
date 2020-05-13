@@ -1,10 +1,10 @@
 # Traitement de données distribuées - ENSAE 2020
 
-* **César Roaldès**  - [Github](https://github.com/RoaldesCesar)
+* **César Roaldès**  - [Github](https://github.com/CesarRoaldes)
 * **Morgane Hoffmann**  - [Github](https://github.com/cerezamo)
 
 
-Ce projet est réalisé dans le cadre du cours Traitement de données distribuées enseigné par Antoine Ly. 
+Ce projet est réalisé dans le cadre du cours Traitement de données distribuées enseigné par Antoine Ly et développé sous l'OS Ubuntu 18.04 LTS.
 
 ## Introduction 
 
