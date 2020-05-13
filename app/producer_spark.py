@@ -73,6 +73,7 @@ query2 = sdf \
 #          .writeStream \
 #          .format("console") \
 #          .outputMode("complete") \
+#          .option("truncate", "false") \
 #          .trigger(processingTime='20 seconds') \
 #          .option("checkpointLocation", "/home/cerezamo/kafka/kafka/checkpoint") \
 #          .start()
@@ -82,7 +83,7 @@ query2 = sdf \
 #          .writeStream \
 #          .format("console") \
 #          .outputMode("complete") \
-#          .trigger(processingTime='20 seconds') \
+#          .trigger(processingTime='10 seconds') \
 #          .option("checkpointLocation", os.path.join(PATH_KAFKA, "checkpoint")) \
 #          .start()
 
