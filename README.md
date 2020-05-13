@@ -8,7 +8,9 @@ Ce projet est réalisé dans le cadre du cours Traitement de données distribué
 
 ## Introduction 
 
-Le projet a pour but de répliquer un pipeline de données mobiles en temps réels. L'architecture construite est représentée dans la figure ... . 
+Le projet a pour but de répliquer un pipeline de données mobiles en temps réels. L'architecture construite est représentée ci dessous : 
+
+
 
 
 ## Getting Started - Prérequis
