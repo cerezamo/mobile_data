@@ -8,7 +8,7 @@ Ce projet est réalisé dans le cadre du cours Traitement de données distribué
 
 ## Introduction 
 
-Ce projet a pour but de répliquer un pipeline de données mobiles en temps réels. L'architecture construite est représentée dans la figure ... . 
+Le projet a pour but de répliquer un pipeline de données mobiles en temps réels. L'architecture construite est représentée dans la figure ... . 
 
 
 ## Getting Started - Prérequis
@@ -38,16 +38,30 @@ Pour installer le simulateur, télécharger le code source de la repository gith
 $git clone https://github.com/bogdanoancea/simulator.git
 ```
 
-Lorsque le simulateur est installé, ouvrez le fichier *makefile.inc* avec l'éditeur de texte de votre choix et modifiez les variables PROJ_HOME et GEOS_HOME. PROJ_HOME doit pointer sur le fichier où vous avez téléchargé le code source du micro-simulateur alors que GEOS_HOME doit pointer sur le fichier du code source de GEOS. Dans notre implémentation nous avons par exemple : 
+Lorsque le répertoire est téléchargé, ouvrez le fichier *makefile.inc* avec l'éditeur de texte de votre choix et modifiez les variables PROJ_HOME et GEOS_HOME. PROJ_HOME doit pointer sur le fichier où vous avez téléchargé le code source du micro-simulateur alors que GEOS_HOME doit pointer sur le fichier du code source de GEOS. Dans notre implémentation nous avons par exemple : 
 
+
+```
 PROJ_HOME = /home/user/simulator
-
 GEOS_HOME = /home/user/geos-3.7.1
+```
 
+Avant de passer à l'installation du simulateur, assurez-vous de copier le fichier geos-3.7.1/src/.libs/libgeos.a dans le dossier racine de GEOS. Pour celà, placer vous dans le dossier racine geos-3.7.1/ puis exécuter la commande :
+
+```
+cp ./src/.libs/libgeos.a ./libgeos.a
+```
+
+Revenir dans le dossier racine du simulateur simulator/ et procéder à l'installation avec les commandes :
+
+```
+make 
+make install
+```
 
 Le simulateur est installé ! 
 
-**Ces instructions sont valables pour Linux, si vous voulez avoir plus d'informations sur l'installation du simulateur sur Windows veuillez vous référer aux instructions de https://github.com/bogdanoancea/simulator**
+**Ces instructions sont valables pour Ubuntu 18.04 LTS, pour plus d'informations sur l'installation du simulateur sur les diofférents OS, veuillez vous référer aux instructions de https://github.com/bogdanoancea/simulator**
 
 #### Simuler des données avec le micro-simulateur 
 
