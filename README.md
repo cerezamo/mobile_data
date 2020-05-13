@@ -71,7 +71,7 @@ Avant de simuler les données allez regarder les inputs possibles (nombre d'ante
 $Release/simulator -m ./data/dataset2/mapMadrid.wkt -s ./data/dataset2/simulation.xml -a ./data/dataset1/antennasMadrid.xml -p ./data/dataset2/persons.xml -pb ./data/dataset1/probabilities.xml -v -o
 ```
 
-Les fichiers ont été simulé !
+Les fichiers ont été simulé ! 
 
 
 #### Préparation des données 
@@ -81,6 +81,8 @@ Vous pouvez à présent cloner notre repository : https://github.com/cerezamo/mo
 $ ! git clone https://github.com/cerezamo/mobile_data
 
 ```
+
+Les données simulées sont apparues dans un fichier madrid_sim. Vérfiez qu'il se trouve bien au même niveau de hiérarchie que dans notre github. Sinon copier-coller les fichiers dans madrid_sim. 
 
 Certains retraitements ont été effectué afin de simuler des envois des antennes vers Kafka et afficher des cartes sur l'application Flask. Pour les reproduire il vous suffit de vous placer dans le fichier notebooks et de lancer le fichier *pretraitement.py*. Ce script vous permet alors de créer un fond de carte *antennes.json* à partir des données simulées, il est enregistré dans le fichier /app/static. De plus, les données associées à chaques antennes sont groupées en un seul csv qui est enregistré sous le nom *kafka_ingestion.csv* et servira à simuler l'envoi en temps réel de données à Kafka. 
 
