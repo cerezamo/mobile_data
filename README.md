@@ -15,7 +15,7 @@ Ce projet a pour but de répliquer un pipeline de données mobiles en temps rée
 
 Nous supposons que Python, Spark ainsi qu'un environnement Pyspark sont installés sur votre ordinateur. Si ce n'est pas le cas veuillez vous référer aux instruction (cf github antoine)
 
-### Simulateur
+### Installer le micro-simulateur et simuler des données 
 
 #### Installation
 Si vous voulez être en mesure de faire vous mêmes vos propres simulations, suivez ce premier chapitre. Sinon, il vous suffit de cloner notre repo et d'utiliser les fichiers que nous avons simulé, dans ce cas passez au chapitre suivant. 
@@ -62,19 +62,27 @@ Les fichiers ont été simulé !
 
 #### Préparation des données 
 
-Certains retraitements ont été effectué afin de simuler des envois des antennes vers Kafka et afficher des cartes sur l'application Flask. Les 
+Vous pouvez à présent cloner notre repository : https://github.com/cerezamo/mobile_data, dans le fichier simulator. 
+```
+$ ! git clone https://github.com/cerezamo/mobile_data
+
+```
+
+Certains retraitements ont été effectué afin de simuler des envois des antennes vers Kafka et afficher des cartes sur l'application Flask. Pour les reproduire il vous suffit de vous placer dans le fichier notebooks et de lancer le fichier *pretraitement.py*. Ce script vous permet alors de créer un fond de carte *antennes.json* à partir des données simulées, il est enregistré dans le fichier /app/static. De plus, les données associées à chaques antennes sont groupées en un seul csv qui est enregistré sous le nom *kafka_ingestion.csv* et servira à simuler l'envoi en temps réel de données à Kafka. 
 
 
 
+### Déploiement de Kafka
 
+La suite des instructions est à présent obligatoire pour être en mesure de faire tourner le code. Si vous avez décidé d'utiliser notre simulation démarrez ici. 
 
+Si ce n'est pas déjà fait obtenez notre repo avec le code suivant : 
+```
+$ ! git clone https://github.com/cerezamo/mobile_data
 
+```
 
-
-
-La suite des instructions est à présent obligatoire pour être en mesure de faire tourner le code. 
-
-### Kafka
+#### Kafka
 
 Le code ci dessous permettra d'installer Kafka, dans le fichier que vous souhaitez : 
 
