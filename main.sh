@@ -113,3 +113,14 @@ echo "BIG BROTHER IN DA HOOD !!"
 
 sleep 1
 xdg-open http://127.0.0.1:2000/
+
+
+
+# sudo service mongodb start 
+# Aller dans "mobile data"
+# mongoimport --type csv -d mobiledata -c antennes --headerline kafka_ingestion.csv
+# Aller dans moobiledata/app/templates/static/
+# mongoimport -d mobiledata -c fond --headerline antennes.json --JsonArray
+# python flaks_app_mongodb2.py
+#
+
