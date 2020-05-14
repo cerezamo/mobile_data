@@ -91,7 +91,7 @@ echo -e "===============================\n"
 echo "Exécution du script python consommant les données du topic antennesIntput, les retraitant, et les envoyant vers le topic antennesOutput..."
 python app/producer_spark.py &> logs/producer_spark.log &
 sleep 5 
-echo -e "Le topic antennesOutput est configuré et en attente de données.\n"
+echo -e "La connexion entre les topics antennesIntput et antennesOutput est établie.\n"
 
 echo "Production de données vers antennesIntput..."
 (cat /home/cesar/cours/ensae/donnees_distrib/projet/mobile_data/kafka_ingestion.csv | split -l 30 --filter="$KAFKA/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic antennesInput; sleep 10" &> logs/antennesProducer.log ) &
