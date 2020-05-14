@@ -20,6 +20,7 @@
 
 
 from flask import Flask, render_template, Response
+from flask_pymongo import PyMongo
 from pykafka import KafkaClient
 import flask
 

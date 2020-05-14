@@ -40,7 +40,7 @@ schema_ant = StructType([StructField("t", IntegerType()),
                      StructField("x", FloatType()),
                      StructField("y", FloatType()),
                      StructField("TileId", IntegerType()),
-                     StructField("timestamp", DateType()),])
+                     StructField("timestamp", StringType()),])
 # StructField("timestamp", DateType()),])
 
 def parse_data_from_kafka_message(sdf, schema):
