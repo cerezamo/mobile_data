@@ -10,23 +10,11 @@ import plotly.graph_objects as go
 import pandas as pd
 
 app = Flask(__name__)
-
 app.config['MONGO_DBNAME'] = 'mobiledata'
 app.config['MONGO_URI'] = 'mongodb://localhost:27017/mobiledata'
 mongo = PyMongo(app)
 
-
-# @app.route('/antennes', methods=['GET'])
-# def get_all_data():
-#   antennes = mongo.db.antennes
-#   output = []
-#   for obs in antennes.find():
-#     output.append({'PhoneId' : obs['PhoneId'], 'x' : obs['x']}, 'y' : obs['y'])
-#   return jsonify({'result' : output})
-
-
 @app.route('/antennes', methods=['GET'])
-
 def get_fond_data():
   fond = mongo.db.fond
   data_fond = pd.DataFrame(list(fond.find()))
@@ -40,7 +28,6 @@ def get_all_data():
 def create_plot_madrid_test(data,fond):
     data['text'] = data['PhoneId'].astype(str)
     fond['text'] = fond['Antenna_Id'].astype(str)
-
     fig = go.Figure()
     fig.add_trace(
        go.Scattergl(
@@ -77,11 +64,20 @@ if __name__ == '__main__':
     app.run(port=2002,use_reloader=True,debug=True)
 
 ###################################################################################################
+
+# @app.route('/antennes', methods=['GET'])
+# def get_all_data():
+#   antennes = mongo.db.antennes
+#   output = []
+#   for obs in antennes.find():
+#     output.append({'PhoneId' : obs['PhoneId'], 'x' : obs['x']}, 'y' : obs['y'])
+#   return jsonify({'result' : output})
+
+
 # @app.route('/')
 # def index():
 #     """Serve the index HTML"""
 #     return(render_template('index_many_simple.html'))
-
 
 # @app.route('/topic/antennes_static')
 # def get_data():

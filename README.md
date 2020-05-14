@@ -116,6 +116,17 @@ ln -sf kafka_2.12-2.2.0 kafka
 ```
 
 
+#### Mongo
+
+Il faut maintenant installer MongoDB. 
+```
+sudo apt update
+sudo apt install -y mongodb
+```
+
+Nous allons égalmeent créer une base de données que nous allons appeler mobiledata. Dans cette base nous allons importer les données du fond de carte avec la position de chaque antenne dans une nouvelle collection. 
+
+
 ## Running 
 
 
