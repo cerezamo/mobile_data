@@ -10,7 +10,7 @@ Ce projet est réalisé dans le cadre du cours Traitement de données distribué
 
 Le projet a pour but de répliquer un pipeline de données mobiles en temps réels. L'architecture construite est représentée ci dessous : 
 
-![image](https://github.com/cerezamo/mobile_data/blob/master/images/architecture.PNG)
+![image](https://github.com/cerezamo/mobile_data/blob/master/images/schema.PNG)
 
 Imaginons que nous recevons des données en provenance des différentes antennes d'une ville. Elles nous renseignent chacune sur la position des tléphones mobiles
 
