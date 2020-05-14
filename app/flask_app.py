@@ -40,19 +40,10 @@ def index():
     """Serve the index HTML"""
     return(render_template('index_many_simple.html'))
 
- #Consumer API
 
-# @app.route('/topic/antennesOutput')
-# def get_messages():
-#     client = get_kafka_client()
-#     def events():
-#         res = {"messages" : []}
-#         for message in client.topics['antennesOutput'].get_simple_consumer():
-#             res["messages"].append(message.value.decode("utf-8"))
-#         res = flask.jsonify(res)
-#         yield 'res:{0}\n\n'.format(res)
-#     return Response(events(), mimetype='application/json') # mimetype="text/event-stream"
-
+@app.route('/topic/antennes_static')
+def get_data():
+  return app.send_static_file('antennes.json')
 
 @app.route('/topic/antennesOutput')
 def get_messages():
