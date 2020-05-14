@@ -15,12 +15,9 @@ from pyspark.sql.functions import unix_timestamp, col
 from pyspark.sql import Window
 from pyspark.sql.functions import *
 PATH_KAFKA = os.environ["KAFKA"]
-
-
 spark = SparkSession.builder \
   .appName("Spark Structured Streaming from Kafka") \
   .getOrCreate()
-
 receiveAntennes = spark \
   .readStream \
   .format("kafka") \
@@ -28,10 +25,7 @@ receiveAntennes = spark \
   .option("subscribe", "antennesInput") \
   .option("startingOffsets", "latest") \
   .load() \
-  .selectExpr("CAST(value AS STRING)") \
-
-
-
+  .selectExpr("CAST(value AS STRING)") 
 from pyspark.sql.types import *
 schema_ant = StructType([StructField("t", IntegerType()),
                      StructField("AntennaId", IntegerType()),
@@ -52,7 +46,6 @@ def parse_data_from_kafka_message(sdf, schema):
     return sdf.select([field.name for field in schema])
 
 sdfAntennes = parse_data_from_kafka_message(receiveAntennes, schema_ant)
-
 sdfAntennes = sdfAntennes.withColumn('timestamp',unix_timestamp(sdfAntennes.timestamp, 'MM-dd-yyyy HH:mm:ss').cast(TimestampType()).alias("timestamp"))
 sdfAntennes = sdfAntennes.where("EventCode!=1")
 sdfAntennes = sdfAntennes.withColumn('x', sdfAntennes.x/1000).withColumn('y', sdfAntennes.y/1000)
@@ -70,7 +63,7 @@ query2 = sdf\
           .writeStream\
           .format("kafka")\
           .outputMode("update")\
-          .trigger(processingTime='5 seconds')\
+          .trigger(processingTime='1 seconds')\
           .option("checkpointLocation", os.path.join(PATH_KAFKA, "checkpoint"))\
           .option("kafka.bootstrap.servers", "localhost:9092")\
           .option("topic", "antennesOutput")\

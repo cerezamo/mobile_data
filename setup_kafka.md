@@ -34,7 +34,7 @@ $KAFKA/bin/zookeeper-shell.sh localhost:2181 ls /brokers/ids
 
 Création :
 ```console
-$KAFKA/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic antennes
+$KAFKA/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic antennesInput
 ```
 
 Suppression :

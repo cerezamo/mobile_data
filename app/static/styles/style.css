@@ -113,7 +113,7 @@
 	}
 
 		hr.major {
-			margin: 3em 0;
+			margin: 0em 0;
 		}
 
 	blockquote {
@@ -173,7 +173,7 @@
 
 	header h2 + p {
 		font-size: 1.25em;
-		margin-top: -1em;
+		margin-top: 0em;
 		line-height: 1.5em;
 	}
 
@@ -193,12 +193,14 @@
 
 	header.major {
 		text-align: center;
-		margin-bottom: 4em;
+		margin-bottom: 0em;
+		margin-top: 0em;
 	}
 
 		header.major h2 {
-			font-size: 3em;
-			margin-bottom: 0.5em;
+			font-size: 2.5em;
+			margin-bottom: 0em;
+			margin-top: 0em;
 		}
 
 		header.major p {
@@ -945,7 +947,7 @@
 		cursor: default;
 		font-size: 1.1em;
 		height: 6em;
-		line-height: 6em;
+		line-height: 5em;
 		width: 100%;
 		z-index: 10000;
 	}
@@ -1059,7 +1061,7 @@
 /* Wrapper */
 
 	.wrapper {
-		padding: 6em 0em 4em;
+		padding: 4em 0em 4em;
 		/* Style 1 Wrapper */
 		/* Style 2 Wrapper */
 		/* Style 3 Wrapper */
@@ -1083,8 +1085,8 @@
 		.wrapper.style2 .profiles {
 			border-bottom: 1px solid rgba(144, 144, 144, 0.25);
 			border-top: 1px solid rgba(144, 144, 144, 0.25);
-			margin-bottom: 4em;
-			padding-top: 4em;
+			margin-bottom: 2em;
+			padding-top: 2em;
 		}
 
 		.wrapper.style2 .profile {

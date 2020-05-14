@@ -94,7 +94,11 @@ sleep 5
 echo -e "Le topic antennesOutput est configuré et en attente de données.\n"
 
 echo "Production de données vers antennesIntput..."
+<<<<<<< HEAD
 (cat /home/cesar/cours/ensae/donnees_distrib/projet/mobile_data/kafka_ingestion.csv | split -l 30 --filter="$KAFKA/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic antennesInput; sleep 10" &> logs/antennesProducer.log ) &
+=======
+(cat /home/cesar/cours/ensae/donnees_distrib/projet/mobile_data/kafka_ingestion.csv | split -l 500 --filter="$KAFKA/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic antennesInput; sleep 10" > /dev/null ) &
+>>>>>>> 4d45e27cd18621a75f32012d6ad07ceb0898e23c
 sleep 1
 echo -e "Le topic antennesIntput produit désormais des données prêtes à être consommées par antennesOutput.\n"
 

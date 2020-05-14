@@ -13,11 +13,12 @@
 /* Container */
 
 	.container {
-		margin-left: auto;
-		margin-right: auto;
+		margin-left: 0em;
+		margin-right: 0em;
 
 		/* width: (containers) */
-		width: 1200px;
+		width: 100%;
+		height: 100%;
 	}
 
 	/* Modifiers */
