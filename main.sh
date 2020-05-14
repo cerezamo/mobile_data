@@ -19,6 +19,8 @@ fi
 read -p "Appuyez sur entrer pour continuer..."
 echo -e "\n"
 
+
+
 echo "================================="
 echo "ETAPE 1 : INITIALISATION DE KAFKA"
 echo -e "=================================\n"
@@ -49,13 +51,6 @@ fi
 
 sleep 0.5
 
-# echo "Suppression des anciens dossiers :\n- /tmp/zookeeper/\n- /tmp/kafka-logs/\n- $KAFKA/checkpoint ..."
-# sudo rm -rf /tmp/zookeeper/
-# sudo rm -rf /tmp/kafka-logs/
-# # A rajouter " si existe" ??  
-# sudo rm -rf $KAFKA/checkpoint	
-# echo "Suppressions effectuées."
-
 echo "Démarrage du zookeeper sur le port 2181..."
 $KAFKA/bin/zookeeper-server-start.sh -daemon $KAFKA/config/zookeeper.properties
 echo "Démarrage du zookeeper réussi."
@@ -80,9 +75,16 @@ echo "Instanciations réussites."
 echo "Liste des topics Kafka créés :"
 $KAFKA/bin/zookeeper-shell.sh localhost:2181 ls /brokers/topics
 
+echo -e "\nDémarrage du serveur MongoDB..."
+sudo service mongodb start
+sleep 0.5
+echo -e "\nMongoDB est actif."
+
 echo -e "\nL'environnement a été mis en place avec succès !"
 read -p "Appuyez sur entrer pour continuer..."
 echo -e "\n"
+
+
 
 echo "==============================="
 echo "ETAPE 2 : EXECUTION DES SCRIPTS"
@@ -93,6 +95,10 @@ python app/producer_spark.py &> logs/producer_spark.log &
 sleep 5 
 echo -e "La connexion entre les topics antennesIntput et antennesOutput est établie.\n"
 
+echo "Mise en place de la connexion antennesOutput-MongoDB..."
+python app/flask_mongodb.py
+echo -e "Connexion établie.\n"
+
 echo "Production de données vers antennesIntput..."
 (cat /home/cesar/cours/ensae/donnees_distrib/projet/mobile_data/kafka_ingestion.csv | split -l 30 --filter="$KAFKA/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic antennesInput; sleep 10" &> logs/antennesProducer.log ) &
 sleep 1
@@ -101,9 +107,14 @@ echo -e "Le topic antennesIntput produit désormais des données prêtes à êtr
 read -p "Appuyez sur entrer pour continuer..."
 echo -e "\n"
 
+
+
 echo "========================================"
 echo "ETAPE 3 : DEMARRAGE DE L'APPLICATION WEB"
 echo -e "========================================\n"
+
+echo "Chargement du fond de carte..."
+mongoimport -d mobiledata -c fond  app/static/antennes.json --jsonArray
 
 echo "Lancement de l'application web..."
 python app/flask_app.py &> logs/flask_app.log &
@@ -119,8 +130,8 @@ xdg-open http://127.0.0.1:2000/
 # sudo service mongodb start 
 # Aller dans "mobile data"
 # mongoimport --type csv -d mobiledata -c antennes --headerline kafka_ingestion.csv
-# Aller dans moobiledata/app/templates/static/
-# mongoimport -d mobiledata -c fond --headerline antennes.json --JsonArray
+# Aller dans moobiledata/app/static/
+# mongoimport -d mobiledata -c fond app/static/antennes.json --jsonArray
 # python flaks_app_mongodb2.py
 #
 
