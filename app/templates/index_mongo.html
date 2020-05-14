@@ -1,6 +1,69 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-    <body>
-      {{ antennes}}
-    </body>
+
+<head>
+  <meta charset="utf-8">
+  <!--PLOTLY-->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.js" charset="utf-8"></script>
+
+  <!--CSS-->
+    <script type="text/javascript"
+    src="{{ url_for('static', filename='styles/skel.min.js') }}"></script>
+    <script type="text/javascript"
+    src="{{ url_for('static', filename='styles/jquery.min.js') }}"></script>
+    <script type="text/javascript"
+    src="{{ url_for('static', filename='styles/init.js') }}"></script>
+    
+<!-- Create an element where the map will take place -->
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/skel.css') }}">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style-xlarge.css') }}">
+</head>
+	<body class="landing">
+		<!-- Two -->
+    <section id="two" class="wrapper style2 special">
+      <div class="container">
+        <header class="major">
+          <h2>Cesar and Morgane are watching you ! </h2>
+          <p>Mobile data projet - ENSAE 2020</p>
+        </header>
+        <div class="container" id="mapid" style = "width:80%; height:80%; text-align: center; margin: 0;">
+          {{ chart|safe }} </div>
+        <footer>
+          <p>Acknowledgment : Mobile data are SIMULATED. Please do not reproduce on real data, it is not RGPD friendly ! </p>
+          <ul class="actions">
+            <li>
+              <a href="https://github.com/cerezamo/mobile_data/" class="button big">Go to our GitHub !</a>
+            </li>
+          </ul>
+        </footer>
+        <!-- <section class="profiles">
+          <div class="row">
+            <section class="3u 6u(medium) 12u$(xsmall) profile">
+              <img src="images/profile_placeholder.gif" alt="" />
+              <h4>Simulator</h4>
+              <p>Authors</p>
+            </section>
+            <section class="3u 6u$(medium) 12u$(xsmall) profile">
+              <img src="images/profile_placeholder.gif" alt="" />
+              <h4>Tutorials</h4>
+              <p>Authors</p>
+            </section>
+            <section class="3u 6u(medium) 12u$(xsmall) profile">
+              <img src="images/profile_placeholder.gif" alt="" />
+              <h4>Doloremque quo</h4>
+              <p>Harum corrupti quia</p>
+            </section>
+            <section class="3u$ 6u$(medium) 12u$(xsmall) profile">
+              <img src="images/profile_placeholder.gif" alt="" />
+              <h4>Voluptatem dicta</h4>
+              <p>Et natus sapiente</p>
+            </section>
+          </div>
+        </section> -->
+      </div>
+  </body>
 </html>
+
