@@ -31,8 +31,8 @@ def create_plot_madrid_test(data,fond):
     fig = go.Figure()
     fig.add_trace(
        go.Scattergl(
-        x = fond['x'],
-        y = fond['y'],
+        x = fond['x']/1000,
+        y = fond['y']/1000,
         text = fond['text'],
         mode='markers',
         name="Antennes",
@@ -47,7 +47,7 @@ def create_plot_madrid_test(data,fond):
             y=data["y"],
             text = data['text'],
             mode="markers",
-            marker_color = data['PhoneId'],
+            marker_color = 'blue',
             name="People",
         )
     )

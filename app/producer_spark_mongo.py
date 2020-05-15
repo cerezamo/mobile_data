@@ -61,7 +61,7 @@ sdf = sdf.select(col("PhoneId").alias("PhoneId"),col("avg(x)").alias("x"),col("a
 query2 = sdf\
           .selectExpr("CAST(PhoneId AS STRING) AS key", "to_json(struct(*)) AS value")\
           .writeStream\
-          .format("mongo")\
+          .format("kafka")\
           .outputMode("update")\
           .trigger(processingTime='1 seconds')\
           .option("checkpointLocation", os.path.join(PATH_KAFKA, "checkpoint"))\
