@@ -91,7 +91,7 @@ echo "ETAPE 2 : EXECUTION DES SCRIPTS"
 echo -e "===============================\n"
 
 echo "Exécution du script python consommant les données du topic antennesIntput, les retraitant, et les envoyant vers le topic antennesOutput..."
-python app/producer_spark.py &> logs/producer_spark.log 
+python app/producer_spark.py &> logs/producer_spark.log &
 sleep 5 
 echo -e "La connexion entre les topics antennesIntput et antennesOutput est établie.\n"
 
@@ -117,13 +117,13 @@ echo "Chargement du fond de carte..."
 mongoimport -d mobiledata -c fond  app/static/antennes.json --jsonArray
 
 echo "Lancement de l'application web..."
-python app/flask_app.py &> logs/flask_app.log &
+python app/flask_app_mongodb.py &> logs/flask_app_mongodb.log &
 sleep 5
-echo "L'application web lancées à l'adresse http://127.0.0.1:2000/"
+echo "L'application web lancées à l'adresse http://127.0.0.1:2001/"
 echo "BIG BROTHER IN DA HOOD !!"
 
 sleep 1
-xdg-open http://127.0.0.1:2000/
+xdg-open http://127.0.0.1:2001/
 
 
 
