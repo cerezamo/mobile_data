@@ -75,11 +75,6 @@ echo "Instanciations réussites."
 echo "Liste des topics Kafka créés :"
 $KAFKA/bin/zookeeper-shell.sh localhost:2181 ls /brokers/topics
 
-echo -e "\nDémarrage du serveur MongoDB..."
-sudo service mongodb start
-sleep 0.5
-echo -e "\nMongoDB est actif."
-
 echo -e "\nL'environnement a été mis en place avec succès !"
 read -p "Appuyez sur entrer pour continuer..."
 echo -e "\n"
@@ -91,13 +86,9 @@ echo "ETAPE 2 : EXECUTION DES SCRIPTS"
 echo -e "===============================\n"
 
 echo "Exécution du script python consommant les données du topic antennesIntput, les retraitant, et les envoyant vers le topic antennesOutput..."
-python app/producer_spark.py &> logs/producer_spark.log 
+python app/producer_spark.py &> logs/producer_spark.log &
 sleep 5 
 echo -e "La connexion entre les topics antennesIntput et antennesOutput est établie.\n"
-
-echo "Mise en place de la connexion antennesOutput-MongoDB..."
-python app/flask_mongodb.py &> logs/kafka_mongodb.log & 
-echo -e "Connexion établie.\n"
 
 echo "Production de données vers antennesIntput..."
 (cat kafka_ingestion.csv | split -l 30 --filter="$KAFKA/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic antennesInput; sleep 10" &> logs/antennesProducer.log ) &
@@ -113,8 +104,6 @@ echo "========================================"
 echo "ETAPE 3 : DEMARRAGE DE L'APPLICATION WEB"
 echo -e "========================================\n"
 
-echo "Chargement du fond de carte..."
-mongoimport -d mobiledata -c fond  app/static/antennes.json --jsonArray
 
 echo "Lancement de l'application web..."
 python app/flask_app.py &> logs/flask_app.log &
@@ -124,14 +113,3 @@ echo "BIG BROTHER IN DA HOOD !!"
 
 sleep 1
 xdg-open http://127.0.0.1:2000/
-
-
-
-# sudo service mongodb start 
-# Aller dans "mobile data"
-# mongoimport --type csv -d mobiledata -c antennes --headerline kafka_ingestion.csv
-# Aller dans moobiledata/app/static/
-# mongoimport -d mobiledata -c fond app/static/antennes.json --jsonArray
-# python flaks_app_mongodb2.py
-#
-
