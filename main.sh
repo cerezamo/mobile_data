@@ -91,7 +91,7 @@ sleep 5
 echo -e "La connexion entre les topics antennesIntput et antennesOutput est établie.\n"
 
 echo "Production de données vers antennesIntput..."
-(cat kafka_ingestion.csv | split -l 30 --filter="$KAFKA/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic antennesInput; sleep 10" &> logs/antennesProducer.log ) &
+(cat kafka_ingestion.csv | split -l 500 --filter="$KAFKA/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic antennesInput; sleep 5" &> logs/antennesProducer.log ) &
 sleep 1
 echo -e "Le topic antennesIntput produit désormais des données prêtes à être consommées par antennesOutput.\n"
 

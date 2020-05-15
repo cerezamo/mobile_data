@@ -100,7 +100,7 @@ python app/flask_mongodb.py &> logs/kafka_mongodb.log &
 echo -e "Connexion établie.\n"
 
 echo "Production de données vers antennesIntput..."
-(cat kafka_ingestion.csv | split -l 30 --filter="$KAFKA/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic antennesInput; sleep 10" &> logs/antennesProducer.log ) &
+(cat kafka_ingestion.csv | split -l 500 --filter="$KAFKA/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic antennesInput; sleep 5" &> logs/antennesProducer.log ) &
 sleep 1
 echo -e "Le topic antennesIntput produit désormais des données prêtes à être consommées par antennesOutput.\n"
 
@@ -119,11 +119,11 @@ mongoimport -d mobiledata -c fond  app/static/antennes.json --jsonArray
 echo "Lancement de l'application web..."
 python app/flask_app_mongodb.py &> logs/flask_app_mongodb.log &
 sleep 5
-echo "L'application web lancées à l'adresse http://127.0.0.1:2001/"
+echo "L'application web lancées à l'adresse http://127.0.0.1:2002/"
 echo "BIG BROTHER IN DA HOOD !!"
 
 sleep 1
-xdg-open http://127.0.0.1:2001/
+xdg-open http://127.0.0.1:2002/
 
 
 
