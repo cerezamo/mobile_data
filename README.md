@@ -12,7 +12,11 @@ Le projet a pour but de répliquer un pipeline de données mobiles en temps rée
 
 ![image](https://github.com/cerezamo/mobile_data/blob/master/images/schema.PNG)
 
-Imaginons que nous recevons des données en provenance des différentes antennes d'une ville. Elles nous renseignent chacune sur la position des tléphones mobiles
+Imaginons que nous recevons des données en provenance des différentes antennes d'une ville. Elles nous renseignent chacune sur la position des téléphones mobiles et donc des individus présents. Nous simulons la réception de ces données en temps réels à partir des données d'un [simulateur](https://github.com/bogdanoancea/simulator) en les envoyant séquentiellement dans un topic Kafka. Elles sont ensuite consommées puis retraitées dans un script PySpark qui les renvoit vers un second topic Kafka. Une collection MongoDB est mise à jour à la réception des messages envoyés par ce second topic Kafka. Enfin les données sont récupérées par Flask qui présente dans une application web, les déplacements en temps réel des individus dans un graphique dynamique. 
+
+
+Nous avons construit, dans un premier temps une architecture n'incluant pas MongoDB. L'architecture incluant MongoDB est en cours de réalisation. 
+
 
 ## Getting Started - Prérequis
 
