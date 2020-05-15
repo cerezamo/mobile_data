@@ -35,8 +35,6 @@ schema_ant = StructType([StructField("t", IntegerType()),
                      StructField("y", FloatType()),
                      StructField("TileId", IntegerType()),
                      StructField("timestamp", StringType()),])
-# StructField("timestamp", DateType()),])
-
 def parse_data_from_kafka_message(sdf, schema):
     from pyspark.sql.functions import split
     assert sdf.isStreaming == True, "DataFrame doesn't receive streaming data"

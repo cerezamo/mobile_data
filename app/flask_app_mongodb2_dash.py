@@ -9,11 +9,15 @@ from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
 import plotly.graph_objects as go
 import pandas as pd
 
-
 app = Flask(__name__)
 app.config['MONGO_DBNAME'] = 'mobiledata'
 app.config['MONGO_URI'] = 'mongodb://localhost:27017/mobiledata'
 mongo = PyMongo(app)
+
+@app.route('/')
+def index():
+    """Serve the index HTML"""
+    return(render_template('index_mongo2.html'))
 
 
 @app.route('/antennes', methods=['GET'])
@@ -24,6 +28,7 @@ def get_all_fond():
       output.append({'Antenna_Id' : obs['Antenna_Id'], 'x' : obs['x'], 'y' : obs['y']})
   return jsonify({'result' : output})
 
+
 @app.route('/stream')
 def get_all_data():
     mongo = PyMongo(app)
@@ -32,13 +37,6 @@ def get_all_data():
     for obs in antennes:
         output.append({'PhoneId' : obs['PhoneId'], 'x' : obs['x'], 'y' : obs['y']})
     return jsonify({'result' : output})
-
-
-@app.route('/')
-def index():
-    
-    """Serve the index HTML"""
-    return(render_template('index_mongo2.html'))
     
 #Response(get_all_data(),  mimetype="application/json") # mimetype="application/json"
 

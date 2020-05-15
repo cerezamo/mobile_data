@@ -91,16 +91,16 @@ echo "ETAPE 2 : EXECUTION DES SCRIPTS"
 echo -e "===============================\n"
 
 echo "Exécution du script python consommant les données du topic antennesIntput, les retraitant, et les envoyant vers le topic antennesOutput..."
-python app/producer_spark.py &> logs/producer_spark.log &
+python app/producer_spark.py &> logs/producer_spark.log 
 sleep 5 
 echo -e "La connexion entre les topics antennesIntput et antennesOutput est établie.\n"
 
 echo "Mise en place de la connexion antennesOutput-MongoDB..."
-python app/flask_mongodb.py
+python app/flask_mongodb.py &> logs/kafka_mongodb.log & 
 echo -e "Connexion établie.\n"
 
 echo "Production de données vers antennesIntput..."
-(cat /home/cesar/cours/ensae/donnees_distrib/projet/mobile_data/kafka_ingestion.csv | split -l 30 --filter="$KAFKA/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic antennesInput; sleep 10" &> logs/antennesProducer.log ) &
+(cat kafka_ingestion.csv | split -l 30 --filter="$KAFKA/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic antennesInput; sleep 10" &> logs/antennesProducer.log ) &
 sleep 1
 echo -e "Le topic antennesIntput produit désormais des données prêtes à être consommées par antennesOutput.\n"
 
