@@ -22,7 +22,7 @@ Nous avons construit, dans un premier temps une architecture n'incluant pas Mong
 
 Nous supposons que Python, Spark ainsi qu'un environnement Pyspark sont installés sur votre ordinateur. Si ce n'est pas le cas veuillez vous référer aux instructions qui figurent sur ce [GitLab](https://gitlab.com/AntoineLy/ensae_distributedcomputing/-/tree/master/TDs/Installation).
 
-Si vous voulez être en mesure de faire vous-mêmes vos propres simulations, suivez cette première partie. Sinon, il vous suffit de cloner notre repo et d'utiliser les fichiers que nous avons simulé, dans ce cas passez à la partie suivant : **Déploiement de Kafka**.
+Si vous voulez être en mesure de faire vous-mêmes vos propres simulations, suivez cette première partie. Sinon, il vous suffit de cloner notre repo et d'utiliser les fichiers que nous avons simulé, dans ce cas passez à la partie suivant : **Déploiement de Kafka et MongoDB**.
 
 ### Installer le micro-simulateur et simuler des données 
 
@@ -96,7 +96,7 @@ Certains retraitements ont été effectué afin de simuler les envois des antenn
 
 
 
-### Déploiement de Kafka
+### Déploiement de Kafka et MongoDB
 
 La suite des instructions est à présent obligatoire pour être en mesure de faire tourner le code. Si vous avez décidé d'utiliser notre simulation démarrez ici. 
 
