@@ -3,8 +3,6 @@ os.environ['PYSPARK_SUBMIT_ARGS'] = '--packages org.apache.spark:spark-sql-kafka
 import pyspark
 import os
 import re
-# from pykafka import SimpleProducer, KafkaClient
-# from pykafka import KafkaProducer
 from pyspark.streaming import StreamingContext
 from pyspark.sql import Column, DataFrame, Row, SparkSession
 from pyspark.streaming.kafka import KafkaUtils
@@ -35,7 +33,6 @@ schema_ant = StructType([StructField("t", IntegerType()),
                      StructField("y", FloatType()),
                      StructField("TileId", IntegerType()),
                      StructField("timestamp", StringType()),])
-# StructField("timestamp", DateType()),])
 
 def parse_data_from_kafka_message(sdf, schema):
     from pyspark.sql.functions import split
@@ -44,20 +41,12 @@ def parse_data_from_kafka_message(sdf, schema):
     for idx, field in enumerate(schema):
         sdf = sdf.withColumn(field.name, col.getItem(idx).cast(field.dataType))
     return sdf.select([field.name for field in schema])
-
 sdfAntennes = parse_data_from_kafka_message(receiveAntennes, schema_ant)
 sdfAntennes = sdfAntennes.withColumn('timestamp',unix_timestamp(sdfAntennes.timestamp, 'MM-dd-yyyy HH:mm:ss').cast(TimestampType()).alias("timestamp"))
 sdfAntennes = sdfAntennes.where("EventCode!=1")
 sdfAntennes = sdfAntennes.withColumn('x', sdfAntennes.x/1000).withColumn('y', sdfAntennes.y/1000)
-
-#sdfLoc = sdfAntennes.withWatermark("time", "2 minutes").groupBy("PhoneId", window("timestamp", "1 minute","1 minute")).avg()
-#sdfLoc3 = sdfAntennes.groupBy("PhoneId", window("timestamp", "2 minutes","1 minutes")).mean()
-# Marche en notebook mais pas la ????????? WHYYYYY 
 sdf = sdfAntennes.groupBy("PhoneId").mean()
 sdf = sdf.select(col("PhoneId").alias("PhoneId"),col("avg(x)").alias("x"),col("avg(y)").alias("y"))
-#sdf = sdf.withColumn("key", lit(0))
-# sdf = sdf.groupBy('key').agg(collect_list("PhoneId").alias("PhoneId"), collect_list("x").alias("x"),collect_list("y").alias("y"))
-
 query2 = sdf\
           .selectExpr("CAST(PhoneId AS STRING) AS key", "to_json(struct(*)) AS value")\
           .writeStream\
@@ -69,57 +58,3 @@ query2 = sdf\
           .option("topic", "antennesOutput")\
           .start() \
           .awaitTermination()
-
-
-# query1 = sdf.withColumn("key", lit(0)) \
-#          .selectExpr("CAST(key AS STRING) AS key", "to_json(struct(*)) AS value") \
-#          .writeStream \
-#          .format("console") \
-#          .outputMode("complete") \
-#          .trigger(processingTime='20 seconds') \
-#          .option("checkpointLocation", "/home/cerezamo/kafka/kafka/checkpoint") \
-#          .start()
-
-# query1 = sdf \
-#          .selectExpr("CAST(PhoneId AS STRING) AS key", "to_json(struct(*)) AS value") \
-#          .writeStream \
-#          .format("console") \
-#          .outputMode("update") \
-#          .trigger(processingTime='20 seconds') \
-#          .option("checkpointLocation", os.path.join(PATH_KAFKA, "checkpoint")) \
-#          .option("truncate", "false") \
-#          .start()
-
-
-# query2 = sdf \
-#          .selectExpr("CAST(PhoneId AS STRING) AS key", "to_json(struct(*)) AS value") \
-#          .write \
-#          .format("kafka") \
-#          .outputMode("update") \
-# <<<<<<< HEAD
-#          .trigger(processingTime='20 seconds') \
-#          .option("checkpointLocation", "/home/cerezamo/kafka/kafka/checkpoint") \
-# =======
-#          .option("checkpointLocation", os.path.join(PATH_KAFKA, "checkpoint")) \
-# >>>>>>> 35cd79e7790b8e986ad49f31184b79f2a358bdac
-#          .option("kafka.bootstrap.servers", "localhost:9092") \
-#          .option("topic", "antennesOutput") \
-#          .start()
-
-
-# query2 = sdf \
-#          .map(_.toString.getBytes).toDF("x") \
-#          .writeStream \
-#          .format("kafka") \
-#          .outputMode("complete") \
-#          .trigger(processingTime='20 seconds') \
-#          .option("checkpointLocation", "$KAFKA/checkpoint") \
-#          .option("kafka.bootstrap.servers", "localhost:9092") \
-#          .option("topic", "antennesOutput") \
-#          .start()
-
-
-# # .trigger(processingTime='2 seconds')
-# #  query1 = sdf_loc.withColumnRenamed(['avg(x)', 'x'], ['avg(y)', 'y']) \
-# #          .selectExpr("CAST(t AS STRING) AS key", "to_json(struct(*)) AS value")
-# #          .writeStream.format("console").outputMode("update").start()
